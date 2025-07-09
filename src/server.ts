@@ -22,7 +22,9 @@ app.get('/health', () => {
 });
 
 app.register(public_routes.getRoomsRoute);
+app.register(public_routes.getRoomsQuestionsRoute);
 app.register(public_routes.createRoomsRoute);
+app.register(public_routes.createQuestionRoute);
 
 app.listen({ port: env.PORT }).then(() => {
     // biome-ignore lint/suspicious/noConsole: dev
