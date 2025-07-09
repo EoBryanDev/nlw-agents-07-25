@@ -6,7 +6,7 @@ import {
     type ZodTypeProvider,
 } from 'fastify-type-provider-zod';
 import { env } from '../env.ts';
-import { getRoomsRoute } from './http/routes/get-rooms.ts';
+import { public_routes } from './http/public-routes.ts';
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -21,7 +21,8 @@ app.get('/health', () => {
     return 'OK';
 });
 
-app.register(getRoomsRoute);
+app.register(public_routes.getRoomsRoute);
+app.register(public_routes.createRoomsRoute);
 
 app.listen({ port: env.PORT }).then(() => {
     // biome-ignore lint/suspicious/noConsole: dev
