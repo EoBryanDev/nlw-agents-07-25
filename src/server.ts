@@ -1,4 +1,5 @@
 import { fastifyCors } from '@fastify/cors';
+import { fastifyMultipart } from '@fastify/multipart'
 import { fastify } from 'fastify';
 import {
     serializerCompiler,
@@ -14,6 +15,8 @@ app.register(fastifyCors, {
     origin: 'http://localhost:5173',
 });
 
+app.register(fastifyMultipart)
+
 app.setSerializerCompiler(serializerCompiler);
 app.setValidatorCompiler(validatorCompiler);
 
@@ -25,6 +28,7 @@ app.register(public_routes.getRoomsRoute);
 app.register(public_routes.getRoomsQuestionsRoute);
 app.register(public_routes.createRoomsRoute);
 app.register(public_routes.createQuestionRoute);
+app.register(public_routes.uploadAudioRecord);
 
 app.listen({ port: env.PORT }).then(() => {
     // biome-ignore lint/suspicious/noConsole: dev
