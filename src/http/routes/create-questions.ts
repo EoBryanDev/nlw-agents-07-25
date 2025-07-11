@@ -29,16 +29,16 @@ export const createQuestionRoute: FastifyPluginCallbackZod = (app) => {
             .select({
                 id: schema.audioChunks.id,
                 transcription: schema.audioChunks.transcription,
-                similarity: sql<number>`1 - (${schema.audioChunks.embeddings}) <=> ${embbedingAsString}::vector`
+                similarity: sql<number>`1 - (${schema.audioChunks.embeddings} <=> ${embbedingAsString}::vector)`
             })
             .from(schema.audioChunks)
             .where(
                 and(
                     eq(schema.audioChunks.roomId, roomId),
-                    sql`1 - (${schema.audioChunks.embeddings}) <=> ${embbedingAsString}::vector > 0.75`
+                    sql`1 - (${schema.audioChunks.embeddings} <=> ${embbedingAsString}::vector) > 0.7`
                 )
             )
-            .orderBy(sql`1 - (${schema.audioChunks.embeddings}) <=> ${embbedingAsString}::vector `)
+            .orderBy(sql`${schema.audioChunks.embeddings} <=> ${embbedingAsString}::vector `)
             .limit(3)
 
         let answer: string | null = null;
